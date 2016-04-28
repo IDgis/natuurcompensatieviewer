@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.core.JasperListener" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+    <Resource 
+       name="jdbc/geo_viewer"
+       auth="Container"
+       type="javax.sql.DataSource"
+       username="flamingo4"
+       password="secret"
+       driverClassName="org.postgresql.Driver"
+       url="jdbc:postgresql://db:5432/flamingo4"
+       maxActive="40"
+       validationQuery="select 1"
+       timeBetweenEvictionRunsMillis="30000"
+       minEvictableIdleTimeMillis="5000" />
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+    <Connector port="8080" protocol="HTTP/1.1"
+        connectionTimeout="20000" URIEncoding="UTF-8" redirectPort="8443" />
+    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+    <Engine name="Catalina" defaultHost="localhost">
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
+      </Host>
+    </Engine>
+  </Service>
+</Server>
