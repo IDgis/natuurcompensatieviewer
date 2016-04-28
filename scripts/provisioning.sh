@@ -54,28 +54,24 @@ echo "get flamingo"
 wget "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer/4.6.0/viewer-4.6.0.war" -O "/var/lib/tomcat7/webapps/viewer.war"
 wget "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer-admin/4.6.0/viewer-admin-4.6.0.war" -O "/var/lib/tomcat7/webapps/viewer-admin.war"
 
+#unpack flamingo wars
+cd /var/lib/tomcat7/webapps
 
-#start tomcat to unpack the wars
-service tomcat7 start
+mkdir viewer
+cd viewer
+unzip ../viewer.war
 
-#stop tomcat
-service tomcat7 stop
+cd ..
+
+mkdir viewer-admin
+cd viewer-admin
+unzip ../viewer-admin.war
+
+cd ~/
 
 #create a link to the idgis components the idgis components
-yes | mkdir /var/lib/tomcat7/webapps/viewer/idgis
-yes | mkdir /var/lib/tomcat7/webapps/viewer/idgis/components
-
+mkdir -p /var/lib/tomcat7/webapps/viewer/idgis
 ln -s viewer/src/main/webapp/idgis/components /var/lib/tomcat7/webapps/viewer/idgis/components
 
 #start tomcat
 service tomcat7 start
-
-
-
-
-
-
-
-
-
-
