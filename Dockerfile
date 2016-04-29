@@ -18,6 +18,7 @@ RUN mkdir -p /usr/share/tomcat7/lib \
 	
 # replace tomcat configuration
 COPY docker/server.xml /usr/share/tomcat7/conf/
+COPY TomCatConfig/context.xml /usr/share/tomcat7/conf/
 
 # download and unpack flamingo
 RUN curl "http://central.maven.org/maven2/com/sun/mail/javax.mail/1.5.2/javax.mail-1.5.2.jar" > /usr/share/tomcat7/lib/javax.mail-1.5.2.jar \
