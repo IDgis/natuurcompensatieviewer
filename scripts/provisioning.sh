@@ -4,18 +4,18 @@ set -e
 
 
 # Install PostgreSQL and PostGIS if it hasn't been installed yet:
-dpkg -s postgresql-9.4 > /dev/null 2>&1 && {
+dpkg -s postgresql-9.3 > /dev/null 2>&1 && {
 	echo "PostgreSQL is installed. Skipping ..."
 } || {
 	echo "PostgreSQL is not installed. Installing ..."
 	apt-get update \
 		&& apt-get install -y --no-install-recommends \
-			postgresql-9.4 \
-			postgresql-9.4-postgis-2.1 \
-			postgresql-contrib-9.4
+			postgresql-9.3 \
+			postgresql-9.3-postgis-2.1 \
+			postgresql-contrib-9.3
 			
-	echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/9.4/main/pg_hba.conf
-	echo "listen_addresses='*'" >> /etc/postgresql/9.4/main/postgresql.conf
+	echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+	echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 	
 	service postgresql restart
 }
