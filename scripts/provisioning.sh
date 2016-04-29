@@ -75,3 +75,11 @@ ln -s viewer/src/main/webapp/idgis/components /var/lib/tomcat7/webapps/viewer/id
 
 #start tomcat
 service tomcat7 start
+
+#install docker
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list
+apt-get update
+apt-get install -y docker-engine
+echo DOCKER_OPTS=\"-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock\" > /etc/default/docker
+service docker restart
