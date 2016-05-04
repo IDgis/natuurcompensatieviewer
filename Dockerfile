@@ -25,8 +25,8 @@ RUN curl "http://central.maven.org/maven2/com/sun/mail/javax.mail/1.5.2/javax.ma
 	&& curl "http://central.maven.org/maven2/postgresql/postgresql/9.0-801.jdbc4/postgresql-9.0-801.jdbc4.jar" > /usr/share/tomcat7/lib/postgresql-9.0-801.jdbc4.jar \
 	&& mkdir -p /usr/share/tomcat7/webapps/ \
 	&& curl "http://nexus.idgis.eu/content/repositories/releases/nl/idgis/sys/provisioning-registration-war/1.1.5/provisioning-registration-war-1.1.5.war" > /usr/share/tomcat7/webapps/provisioning-registration-war.war \
-	&& curl "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer/4.6.0/viewer-4.6.0.war" > /usr/share/tomcat7/webapps/viewer.war \
-	&& curl "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer-admin/4.6.0/viewer-admin-4.6.0.war" > /usr/share/tomcat7/webapps/viewer-admin.war \
+	&& curl "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer/4.6.4/viewer-4.6.4.war" > /usr/share/tomcat7/webapps/viewer.war \
+	&& curl "http://repo.b3p.nl/nexus/content/repositories/releases/org/flamingo-mc/viewer-admin/4.6.4/viewer-admin-4.6.4.war" > /usr/share/tomcat7/webapps/viewer-admin.war \
 	&& unzip -d /usr/share/tomcat7/webapps/provisioning-registration-war /usr/share/tomcat7/webapps/provisioning-registration-war.war \
 	&& unzip -d /usr/share/tomcat7/webapps/viewer /usr/share/tomcat7/webapps/viewer.war \
 	&& unzip -d /usr/share/tomcat7/webapps/viewer-admin /usr/share/tomcat7/webapps/viewer-admin.war \
