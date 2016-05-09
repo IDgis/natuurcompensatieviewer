@@ -16,28 +16,26 @@
  */
 /**
  * Custom configuration object for LayerLinkInfo configuration
+ * 
+ * Component to configure two layers with a link layer. 
+ *  * The value of an attribute of a FeatureInfoLayer
+ * will be used to highlight features in the linked layer by means of a setting 
+ * a filter property in the GetMap request. The map service (Geoserver) 
+ * must facilitate this functionality.
+ *  
  * @author <a href="mailto:linda.vels@idgis.nl">Linda Vels</a>
  */
 Ext.define("viewer.components.CustomConfiguration",{
     extend: "viewer.components.SelectionWindowConfig",
     form: null,
     constructor: function (parentId,configObject){
-        //console.log(configObject);
     	if (configObject===undefined || configObject===null){
             configObject={};
         }
         
         configObject.layerFilter=this.layerFilter;
-        //console.log(configObject.layers);
-        //console.log(configObject.layerFilter(configObject.layers));
-        viewer.components.CustomConfiguration.superclass.constructor.call(this, parentId,configObject);        
-        
-        this.checkPanelHeight=200;
-        
-        console.log(Ext.form.Field.prototype.afterRender);
-        
-       
-        
+        viewer.components.CustomConfiguration.superclass.constructor.call(this, parentId,configObject);         
+        this.checkPanelHeight=200;     
         
         this.form.add([
          {
@@ -222,9 +220,6 @@ Ext.define("viewer.components.CustomConfiguration",{
         ]);
         
         this.createCheckBoxes(this.configObject.layers,{});
-
-		
-        
         
     },
     layerFilter: function(layers){

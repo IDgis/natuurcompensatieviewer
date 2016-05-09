@@ -16,18 +16,26 @@
  */
 /**
  * LayerLinkInfo component
+ * 
+ * extends FeatureInfo
+ * 
  * Shows feature info and highlights linked features in a linkedlayer.
+ * The featureinfo will be enriched with a zoomlink to zoom to the highlighted features.
+ *  
+ * The value of an attribute of a FeatureInfoLayer will be used to highlight features 
+ * in the linked layer by means of a setting a filter property in the GetMap request. 
+ * The map service (Geoserver) must facilitate this functionality
+ * 
  * Only works for geoserver layers.
+ * 
  * @author <a href="mailto:lindavels@idgis.nl">LindaVels</a>
  */
 Ext.define ("idgis.components.LayerLinkInfo", {
     extend: "viewer.components.FeatureInfo",   
     progressElement: null,
-    //config: {
-		// linkedlayers: null
-	//},
 	linkLayers: [],
-    /**
+
+	/**
      * Overwrite constructor to set some other settings then maptip.
      */
     constructor: function (conf){    
@@ -37,7 +45,7 @@ Ext.define ("idgis.components.LayerLinkInfo", {
         idgis.components.LayerLinkInfo.superclass.superclass.constructor.call(this, conf);
         this.initConfig(conf);
         
-        //voeg de appLayer toe aan linklayers en vul linklayers[]
+        //Get configuration
         var appLayers = this.config.viewerController.app.appLayers;
         var wmsFilter1 = conf.InfoLayerAttr1 + ":[" + conf.LinkLayerAttr1 + "]"; 
         var wfsFilter1 = conf.InfoLayerAttr1 + "=[" + conf.LinkLayerAttr1 + "]"; 
@@ -86,7 +94,7 @@ Ext.define ("idgis.components.LayerLinkInfo", {
                 continue;
             }
             var layer = data[layerIndex];
-            //check of layer een linklaag is
+            //check if layer is linklayer
             for(var linklayer in this.linkLayers) {
             	if (this.linkLayers[linklayer].layername === layer.appLayer.layerName) {
             		for (var index in layer.features) {
@@ -103,12 +111,10 @@ Ext.define ("idgis.components.LayerLinkInfo", {
         }
         if (infoLinkLayer){        	
         	this.setHighlight (infoLinkLayer);
-        	//maak het info scherm
+        	//create the infoscreen
         	this.createLinkInfoDiv (infoLinkLayer);
         } 
     },
-    
-
     
     createLinkInfoDiv: function (infoLinkLayer) {
     	var cDiv=Ext.get (this.getContentDiv());
@@ -196,17 +202,14 @@ Ext.define ("idgis.components.LayerLinkInfo", {
                 
             },
             failure: function(result) {
-            	console.log("mislukt");
-            	/*if(failureFunction != undefined) {
-                    failureFunction("Ajax request failed with status " + result.status + " " + result.statusText + ": " + result.responseText);
-                }*/
+            	console.log("calculating zoomlink failed");
             }
         });
             
     },
         
     /**
-     * create info elements for the popup.
+     * create info elements for the infoscreen.
      */
     createInfoHtmlElement: function (infoLinkLayer){
         var me = this;
@@ -220,14 +223,12 @@ Ext.define ("idgis.components.LayerLinkInfo", {
           
            var layerName= layer.request.appLayer;
            
-           //alleen het eerste feature
+           //only first feature
         	var feature = layer.features[0];
             //backwards compatibility. If the feature is the attributes (old way) use the feature as attribute obj.
             var attributes = feature.attributes? feature.attributes : feature;
             var featureDiv = new Ext.Element(document.createElement("div"));
             featureDiv.addCls("feature_summary_feature");
-            //var id= "f" + appLayer.serviceId+layerName+"_0";
-            //featureDiv.id= id;
 
             var columnDiv = new Ext.Element(document.createElement("div"));
             columnDiv.addCls("feature_summary_leftcolumn");
@@ -269,44 +270,12 @@ Ext.define ("idgis.components.LayerLinkInfo", {
                 }
                 columnDiv.insertFirst(extraDiv);
             }
-
             featureDiv.appendChild(columnDiv);
-
-            
         }
         return featureDiv;
-    },
+    },    
     
-    
-
-    
-    
-    
-    
-//    /**
-//     *Called when extent is changed, recalculate the position
-//     */
-//    onChangeExtent : function(map,options){        
-//        if (this.worldPosition && options.extent){
-//            if (options.extent.isIn(this.worldPosition.x,this.worldPosition.y)){
-//                this.balloon.setPositionWorldCoords(this.worldPosition.x,this.worldPosition.y,false,this.getBrowserZoomRatio());
-//            }else{
-//                this.balloon.hide();
-//            }
-//        }
-//    },
-//    /**
-//     * 
-//     */
-//     setMaptipEnabled: function (enable){        
-//        var maptips= this.config.viewerController.getComponentsByClassName("viewer.components.Maptip");
-//        for (var i =0; i < maptips.length;i++){
-//            if (typeof maptips[i].setEnabled == 'function'){
-//                maptips[i].setEnabled(enable);
-//            }
-//        } 
-//     },
-//    
+ 
     
     /**
      * Return the name of the superclass to inherit the css property.
